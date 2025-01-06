@@ -54,17 +54,6 @@
 
 **IndexedDB** сохраняет две таблицы (ObjectStore):
 
-1. **domains**:  
-   - `id`: уникальный идентификатор (тип данных `number`, автоинкремент).
-   - `name`: название домена (тип данных `string`, уникальное значение).
+`domains {id:number(auto increment), name:string (unique)}`
 
-2. **profiles**:  
-   - `id`: уникальный идентификатор (тип данных `number`, автоинкремент).
-   - `username`: имя пользователя (тип данных `string`).
-   - `password`: пароль (тип данных `string`).
-   - `oldPassword`: массив объектов, содержащих старые пароли.
-     - Каждый объект имеет структуру: 
-       - `password`: старый пароль (тип данных `string`).
-       - `savedAt`: временная метка сохранения старого пароля (тип данных `timestamp`).
-   - `updatedAt`: временная метка последнего обновления (тип данных `timestamp`).
-
+`profiles {id:number(auto increment), username:string, password:string, oldPassword[{password:string, savedAt:timestamp}], updatedAt:timestamp}`
