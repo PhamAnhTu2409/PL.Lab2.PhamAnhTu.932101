@@ -320,7 +320,7 @@ class PasswordManagerApplication {
         jsx += `
           <div id="${id}" class="domain-container">
             <div class="domain-header">
-              <p class="domain-title">${name}</p>
+              <p class="domain-title">Domain: ${name}</p>
               <div class="domain-actions">
                 <div domain-id="${id}" class="add-profile btn btn-black">Add profile</div>
                 <div domain-id="${id}" class="delete-domain btn btn-yellow">Delete domain</div>
