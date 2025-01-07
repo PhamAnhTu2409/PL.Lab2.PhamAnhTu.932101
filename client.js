@@ -258,7 +258,7 @@ class PasswordManagerApplication {
     //Get element (input,buttons,box)
     const domainsDiv = document.querySelector('#domains-list');
     const infoBox = document.querySelector('#info-box');
-    const infoBoxContent = document.querySelector('#info-box-content');
+    const infoBoxContent = document.querySelector('#info-box-content-details');
     const deleteDomainBox = document.querySelector('#delete-domain-box');
     const createDomainBox = document.querySelector('#create-domain-box');
     const createProfileBox = document.querySelector('#create-profile-box');
@@ -409,7 +409,7 @@ class PasswordManagerApplication {
         }
       }
       if (target.classList.contains('info-profile')) {
-        console.log('showing info');
+        
         const profileId = target.getAttribute('data-user-id');
         const profile = await this.getProfileById(profileId);
         const domain = await this.getDoMainById(profile.domainId);
@@ -426,13 +426,13 @@ class PasswordManagerApplication {
       
         const content = `
           <div class="info-domain">
-            domain: ${domain.name}
+            Domain: ${domain.name}
           </div>
-          <div class="info-login">login: ${profile.username}</div>
-          <div class="info-password">password (current): ${profile.password}</div>
+          <div class="info-login">Login: ${profile.username}</div>
+          <div class="info-password">Password (current): ${profile.password}</div>
           <div class="password-history">
-            <div class="history-title">password record:</div>
-            ${passwordList || 'no history found for this profile'}
+            <div class="history-title">Password record:</div>
+            ${passwordList || 'No history found for this profile'}
           </div>
         `;
         infoBoxContent.innerHTML = content;

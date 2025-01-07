@@ -153,12 +153,12 @@ button {
 }
 
 .close-button {
-  background-color: #dc3545;
+  background-color: #0078d7;
   color: #fff;
 }
 
 .close-button:hover {
-  background-color: #c82333;
+  background-color: #0056a3;
 }
 
 .create-button {
@@ -306,24 +306,23 @@ button {
 }
 /* Utility Classes */
 .input-highlight {
-  color: #16a34a; /* Màu xanh lá */
+  color: #0078d7; /* Màu xanh lá */
   font-weight: bold;
-  border: 1px solid #16a34a;
+  border: 1px solid #0078d7;
 }
 
 .btn-highlight {
-  background-color: #16a34a; /* Màu xanh lá */
+  background-color: #0078d7; 
   color: white;
 }
 
 .btn-highlight:hover {
-  background-color: #15803d; /* Màu xanh lá đậm hơn */
+  background-color: #005F9E; 
 }
 
 .info-domain {
-  text-align: center;
+  
   font-weight: bold;
-  margin-bottom: 8px;
 }
 
 .info-login,
@@ -338,6 +337,8 @@ button {
   padding: 4px;
   border: 1px solid #ccc;
   background-color: #f9f9f9;
+  border-radius: 6px;
+  margin: 5px 0;
 }
 
 .history-title {
@@ -360,4 +361,20 @@ button {
 .record-password {
   font-size: 14px;
   color: #333;
+}
+
+
+.info-box-content{
+  background-color: white; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); 
+  padding: 1.5rem;
+  width: 90%; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  border-radius: 6px;
+}
+.info-text{
+  font-weight: bolder;
+  text-align: center;
 }
