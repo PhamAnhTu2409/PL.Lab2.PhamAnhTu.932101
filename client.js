@@ -292,49 +292,43 @@ class PasswordManagerApplication {
             const parsedDate = new Date(updatedAt).toLocaleString('en-US');
             return (
               accumulator +
-              `<div class="grid grid-cols-4 pt-2 border-t-2 border-black border-solid ">
-                <div class="flex flex-col  col-span-4 scale-[80%]">
-                  <div>login: ${username}</div>
-                  <div class="flex flex-row">password:${' '}
-                  <input class="max-w-[170px] focus:outline-none" id="${
-                    'input' + name + username + id
-                  }" type="password" value=${password} disabled></div>
-                  <div  class="flex gap-0 scale-[80%]">
-                    <div class="">updated at:</div> 
-                    <div class="" id=${
-                      'date' + name + username + id
-                    }>${parsedDate}
+              `<div class="profile-grid">
+                  <div class="profile-details">
+                    <div>Login: <div class="profile-details-username"> ${username}</div></div>
+                    <div class="profile-password">
+                      Password:
+                      <input class="password-input" id="${
+                        'input' + name + username + id
+                      }" type="password" value="${password}" disabled>
+                    </div>
+                    <div class="profile-updated">
+                      <div>Updated at:
+                      <div id="${'date' + name + username + id}" class="profile-updated-updated">${parsedDate}</div></div> 
                     </div>
                   </div>
-                </div>
-                <div data-input=${
-                  'input' + name + username + id
-                } class="toggle-password w-full scale-75 bg-gray-500 text-white px-1 text-center ">show</div>
-                <div data-user-id=${id} data-input=${
-                'input' + name + username + id
-              } data-date=${'date' + name + username + id} 
-              class="edit-profile w-full scale-75 bg-gray-500 text-white px-1 text-center ">edit</div>
-                <div data-user-id=${id} class="info-profile w-full scale-75 bg-sky-500 text-white px-1 text-center ">info</div>
-                <div data-user-id=${id} class="delete-profile w-full scale-75 bg-red-500 text-white px-1 text-center ">delete</div>
+                  <div class="profile-actions">
+                  <div data-input="${'input' + name + username + id}" class="toggle-password btn btn-gray">show</div>
+                  <div data-user-id="${id}" data-input="${'input' + name + username + id}" data-date="${'date' + name + username + id}" class="edit-profile btn btn-gray">edit</div>
+                  <div data-user-id="${id}" class="info-profile btn btn-blue">info</div>
+                  <div data-user-id="${id}" class="delete-profile btn btn-red">delete</div>
+                  </div>
               </div>`
             );
           }, '');
         }
-
+        
         jsx += `
-      <div id=${id} class="sm:w-[70%] w-[85%] flex flex-col m-auto border-black border-2 justify-center mb-2">
-        <div class="bg-gray-400">
-        <div class="">
-          <p class="text-center scale-100 p-1">${name}</p>
-        </div>
-        <div class="grid grid-cols-2">
-          <div domain-id=${id} class="add-profile bg-black w-full text-white text-center cursor-pointer scale-75 p-1">Add profile</div>
-          <div domain-id=${id} class="delete-domain bg-yellow-600 w-full text-white text-center cursor-pointer scale-75 p-1">Delete domain</div>
-        </div>
-        </div>
-        <div class="flex flex-col">${profileJSX}</div>
-      </div>
-    `;
+          <div id="${id}" class="domain-container">
+            <div class="domain-header">
+              <p class="domain-title">${name}</p>
+              <div class="domain-actions">
+                <div domain-id="${id}" class="add-profile btn btn-black">Add profile</div>
+                <div domain-id="${id}" class="delete-domain btn btn-yellow">Delete domain</div>
+              </div>
+            </div>
+            <div class="profile-list">${profileJSX}</div>
+          </div>`;
+        
       }
       //implement that JSX string into html file
       domainsDiv.innerHTML = jsx;
@@ -383,12 +377,12 @@ class PasswordManagerApplication {
           passwordInput.disabled = passwordInput.disabled ? false : true;
           if (!passwordInput.disabled) {
             passwordInput.setAttribute('old-value', passwordInput.value);
-            passwordInput.classList.add('text-green-600');
-            target.classList.add('bg-green-600');
+            passwordInput.classList.add('input-highlight');
+            target.classList.add('btn-highlight');
             passwordInput.focus();
           } else {
-            passwordInput.classList.remove('text-green-600');
-            target.classList.remove('bg-green-600');
+            passwordInput.classList.remove('input-highlight');
+            target.classList.remove('btn-highlight');
             const oldValue = passwordInput.getAttribute('old-value');
             const newValue = passwordInput.value;
             if (oldValue === newValue) {
@@ -397,14 +391,13 @@ class PasswordManagerApplication {
               const profile = await this.getProfileById(profileId);
               const update = await this.updatePassword(profile, newValue);
               if (update) {
-                const parsedDate = new Date(update.updatedAt).toLocaleString(
-                  'en-US'
-                );
+                const parsedDate = new Date(update.updatedAt).toLocaleString('en-US');
                 dateField.innerHTML = parsedDate;
               }
             }
           }
         }
+        
       }
       if (target.classList.contains('delete-profile')) {
         console.log('deleting');
@@ -424,28 +417,29 @@ class PasswordManagerApplication {
           const { password, savedAt } = item;
           const parsedDate = new Date(savedAt).toLocaleString('en-US');
           accumulator += `
-          <div  class="flex">
-            <div class="italic pr-2">${parsedDate}:</div>
-            <div>${password}</div>
-          </div>`;
+            <div class="password-record">
+              <div class="record-date">${parsedDate}:</div>
+              <div class="record-password">${password}</div>
+            </div>`;
           return accumulator;
         }, '');
-
+      
         const content = `
-        <div class="text-center">
-          domain: ${domain.name}
-        </div>
-        <div> login: ${profile.username}</div>
-        <div> password (current): ${profile.password}</div>
-        <div class="max-h-[120px]">
-        <div> password record:</div>
-        ${passwordList || 'no history found for this profile'}
-        </div>
+          <div class="info-domain">
+            domain: ${domain.name}
+          </div>
+          <div class="info-login">login: ${profile.username}</div>
+          <div class="info-password">password (current): ${profile.password}</div>
+          <div class="password-history">
+            <div class="history-title">password record:</div>
+            ${passwordList || 'no history found for this profile'}
+          </div>
         `;
         infoBoxContent.innerHTML = content;
         infoBox.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
       }
+      
       if (target.classList.contains('add-profile')) {
         const domainId = target.getAttribute('domain-id');
         createProfileBox.classList.remove('hidden');
